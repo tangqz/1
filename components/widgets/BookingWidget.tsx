@@ -1,8 +1,8 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
-import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, getDay, addDays, startOfToday } from 'date-fns';
+import { useState } from 'react';
+import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, getDay, startOfToday } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight, Clock, MapPin, Globe, Calendar as CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -38,7 +38,7 @@ export const BookingWidget: React.FC<BookingFormProps> = ({ onSubmitSuccess }) =
   const startDay = getDay(startOfMonth(currentMonth));
   const emptyDays = Array(startDay).fill(null);
 
-  const generateTimeSlots = (date: Date) => {
+  const generateTimeSlots = (_date: Date) => {
     // Mock logic
     const slots = [];
     for (let i = 9; i <= 20; i++) {
@@ -94,7 +94,7 @@ export const BookingWidget: React.FC<BookingFormProps> = ({ onSubmitSuccess }) =
     return (
         <div className="flex flex-col h-full bg-white p-6 md:p-8">
             <div className="mb-6">
-                <button onClick={() => setStep('date')} className="flex items-center text-gray-500 hover:text-gray-900 transition-colors mb-4">
+                <button aria-label="返回日历" onClick={() => setStep('date')} className="flex items-center text-gray-500 hover:text-gray-900 transition-colors mb-4">
                     <ChevronLeft size={16} className="mr-1" />
                     返回日历
                 </button>
@@ -189,8 +189,8 @@ export const BookingWidget: React.FC<BookingFormProps> = ({ onSubmitSuccess }) =
                 <div className="flex items-center justify-between mb-4">
                     <span className="font-medium text-gray-900">{format(currentMonth, 'yyyy年 MM月')}</span>
                     <div className="flex gap-1">
-                        <button onClick={() => setCurrentMonth(m => addMonths(m, -1))} className="p-1 hover:bg-gray-100 rounded-md transition-colors"><ChevronLeft size={16} /></button>
-                        <button onClick={() => setCurrentMonth(m => addMonths(m, 1))} className="p-1 hover:bg-gray-100 rounded-md transition-colors"><ChevronRight size={16} /></button>
+                        <button aria-label="上个月" onClick={() => setCurrentMonth(m => addMonths(m, -1))} className="p-1 hover:bg-gray-100 rounded-md transition-colors"><ChevronLeft size={16} /></button>
+                        <button aria-label="下个月" onClick={() => setCurrentMonth(m => addMonths(m, 1))} className="p-1 hover:bg-gray-100 rounded-md transition-colors"><ChevronRight size={16} /></button>
                     </div>
                 </div>
 
