@@ -50,11 +50,11 @@ export default function Home() {
                         <span className="font-semibold text-gray-700">开始预约</span>
                     </div>
                 </div>
-                {/* Placeholder for future feature */}
-                <div className="cursor-pointer group">
-                    <div className="bg-white/40 backdrop-blur-md p-4 rounded-xl border border-white/50 hover:bg-white/60 transition-all flex flex-col items-center gap-2 shadow-lg group-hover:scale-105">
-                        <img src="https://img.icons8.com/color/96/about.png" alt="关于我" className="w-12 h-12" />
-                        <span className="font-semibold text-gray-700">关于我</span>
+                {/* Admin Link (Disguised as About Me or separate) */}
+                <div onClick={() => window.location.href='/admin'} className="cursor-pointer group">
+                     <div className="bg-white/40 backdrop-blur-md p-4 rounded-xl border border-white/50 hover:bg-white/60 transition-all flex flex-col items-center gap-2 shadow-lg group-hover:scale-105">
+                        <img src="https://img.icons8.com/color/96/settings--v1.png" alt="后台" className="w-12 h-12" />
+                        <span className="font-semibold text-gray-700">管理后台</span>
                     </div>
                 </div>
             </motion.div>
@@ -73,7 +73,7 @@ export default function Home() {
                 <WindowFrame
                     title="预约课程"
                     onClose={() => setShowBooking(false)}
-                    className="w-full max-w-lg h-[600px]"
+                    className="w-full max-w-4xl h-[600px]"
                 >
                     <BookingWidget onSubmitSuccess={() => {}} />
                 </WindowFrame>
