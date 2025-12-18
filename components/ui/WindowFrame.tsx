@@ -2,6 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Minus, Square, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface WindowFrameProps {
   title: string;
@@ -14,7 +15,7 @@ interface WindowFrameProps {
 export const WindowFrame: React.FC<WindowFrameProps> = ({ title, children, className, onClose }) => {
   return (
     <div className={cn(
-      "flex flex-col bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl rounded-lg overflow-hidden transition-all duration-300",
+      "flex flex-col glass-window rounded-xl overflow-hidden shadow-2xl transition-all duration-300",
       className
     )}>
       {/* Title Bar */}
@@ -31,7 +32,7 @@ export const WindowFrame: React.FC<WindowFrameProps> = ({ title, children, class
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto p-4 custom-scrollbar relative">
+      <div className="flex-1 overflow-auto bg-white/40 custom-scrollbar relative">
         {children}
       </div>
     </div>
