@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from 'react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, getDay, addMonths, startOfToday } from 'date-fns';
+import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, getDay, startOfToday } from 'date-fns';
 import { zhCN } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight, Clock, MapPin, Globe, Calendar as CalendarIcon, Check, User, Phone, Mail, BookOpen, GraduationCap, Edit } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -48,7 +48,8 @@ export const BookingWidget: React.FC<BookingFormProps> = ({ onSubmitSuccess }) =
   const startDay = getDay(startOfMonth(currentMonth));
   const emptyDays = Array(startDay).fill(null);
 
-  const generateTimeSlots = (date: Date) => {
+  const generateTimeSlots = (_date: Date) => {
+    // Mock logic
     const slots = [];
     for (let i = 9; i <= 20; i++) {
         slots.push(`${i}:00`);
@@ -83,16 +84,19 @@ export const BookingWidget: React.FC<BookingFormProps> = ({ onSubmitSuccess }) =
   return (
     <div className="flex flex-col md:flex-row h-full bg-white/80 backdrop-blur-sm divide-y md:divide-y-0 md:divide-x divide-gray-200/50">
 
-        {/* Left Sidebar: Service Info */}
-        <div className="w-full md:w-[300px] bg-gray-50/80 p-6 flex flex-col gap-6 shrink-0">
-             <div className="space-y-4">
-                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center border border-gray-100">
-                    <img src="https://img.icons8.com/color/96/calendar--v1.png" alt="Icon" className="w-8 h-8" />
-                </div>
-                <div>
-                    <h2 className="text-gray-500 font-medium text-sm uppercase tracking-wide">家教预约</h2>
-                    <h1 className="text-2xl font-bold text-gray-900 mt-1">2小时辅导课程</h1>
-                </div>
+  if (step === 'form') {
+    return (
+        <div className="flex flex-col h-full bg-white p-6 md:p-8">
+            <div className="mb-6">
+                <button aria-label="返回日历" onClick={() => setStep('date')} className="flex items-center text-gray-500 hover:text-gray-900 transition-colors mb-4">
+                    <ChevronLeft size={16} className="mr-1" />
+                    返回日历
+                </button>
+                <h2 className="text-xl font-bold text-gray-900">填写详细信息</h2>
+                <p className="text-gray-500 text-sm mt-1">
+                    {selectedDate && format(selectedDate, 'yyyy年MM月dd日', { locale: zhCN })} {selectedTime}
+                </p>
+            </div>
 
                 <div className="space-y-4 text-gray-600">
                     <div className="flex items-start gap-3 text-sm">
@@ -206,20 +210,15 @@ export const BookingWidget: React.FC<BookingFormProps> = ({ onSubmitSuccess }) =
                     </motion.div>
                 )}
 
-                {step === 'form' && (
-                    <motion.div
-                        key="step-form"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        className="h-full p-8 overflow-y-auto custom-scrollbar"
-                    >
-                         <button onClick={() => setStep('date')} className="flex items-center text-gray-500 hover:text-gray-900 transition-colors mb-6 group text-sm">
-                            <div className="bg-gray-100 p-1.5 rounded-full mr-2 group-hover:bg-gray-200 transition-colors">
-                                <ChevronLeft size={16} />
-                            </div>
-                            返回日历
-                        </button>
+            {/* Calendar */}
+            <div className="pt-4 border-t border-gray-100">
+                <div className="flex items-center justify-between mb-4">
+                    <span className="font-medium text-gray-900">{format(currentMonth, 'yyyy年 MM月')}</span>
+                    <div className="flex gap-1">
+                        <button aria-label="上个月" onClick={() => setCurrentMonth(m => addMonths(m, -1))} className="p-1 hover:bg-gray-100 rounded-md transition-colors"><ChevronLeft size={16} /></button>
+                        <button aria-label="下个月" onClick={() => setCurrentMonth(m => addMonths(m, 1))} className="p-1 hover:bg-gray-100 rounded-md transition-colors"><ChevronRight size={16} /></button>
+                    </div>
+                </div>
 
                         <div className="mb-8">
                             <h2 className="text-2xl font-bold text-gray-900">填写详细信息</h2>
