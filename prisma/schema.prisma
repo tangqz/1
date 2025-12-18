@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Booking {
+  id        String   @id @default(uuid())
+  parentName String
+  studentName String
+  phone     String
+  email     String?
+  subject   String?
+  grade     String?
+  notes     String?
+  startTime DateTime
+  endTime   DateTime
+  status    String   @default("pending") // pending, confirmed, cancelled
+  createdAt DateTime @default(now())
+}
+
+model Availability {
+  id        String   @id @default(uuid())
+  dayOfWeek Int      // 0-6 (Sun-Sat)
+  startTime String   // "09:00"
+  endTime   String   // "11:00"
+  isActive  Boolean  @default(true)
+}
+
+model OneTimeAvailability {
+  id        String   @id @default(uuid())
+  date      DateTime
+  startTime String
+  endTime   String
+  isAvailable Boolean @default(true) // Can be used to block time too
+}
+
+model Announcement {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  isPublic  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
