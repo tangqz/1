@@ -1,0 +1,19 @@
+
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: tutor-booking-system
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:/data/db.sqlite
+      - EMAIL_USER=your_email@example.com
+      - EMAIL_PASSWORD=your_email_password
+      - EMAIL_TO=your_academic_email@example.com
+    volumes:
+      - ./data:/data
+    # Optional: Run migrations on startup (be careful with this in prod with scaling)
+    # command: sh -c "npx prisma migrate deploy && node server.js"
